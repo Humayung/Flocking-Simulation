@@ -1,23 +1,16 @@
-import processing.core.PApplet;
-import processing.core.PVector;
-
 public class Ray {
     PVector pos;
     PVector dir;
 
-    static PApplet t;
 
-    Ray(PApplet target, PVector pos, float angle){
+    Ray(PVector pos, float angle){
         this.pos = pos;
         dir = PVector.fromAngle(angle);
-        if(t == null) {
-            t = target;
-        }
     }
 
     void draw(){
-        t.stroke(255);
-        t.line(pos.x, pos.y, pos.x + dir.x * 10, pos.y + dir.y * 10);
+        stroke(255);
+        line(pos.x, pos.y, pos.x + dir.x * 10, pos.y + dir.y * 10);
     }
 
     void rotate(float angle){

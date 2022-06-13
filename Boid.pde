@@ -1,24 +1,15 @@
-import processing.core.PApplet;
-import processing.core.PVector;
-
-import java.util.ArrayList;
-
 public class Boid {
 
     PVector position;
     PVector velocity;
     PVector acceleration;
 
-    static int width;
-    static int height;
-    static PApplet t;
-
     float maxForce;
     float maxSpeed = 5;
 
     float perceptionRadius;
-    static int index = 0;
-    int color;
+    int index = 0;
+    int color_;
 
     Ray ray;
 
@@ -27,42 +18,39 @@ public class Boid {
     private float cohesionMultiplier;
     private float maxSeeAhead = 100;
 
-    Boid(PApplet target) {
-        t = t == null ? target : t;
+    Boid() {
 
-        width = target.width;
-        height = target.height;
-        position = new PVector(t.random(width), t.random(height));
+        position = new PVector(random(width), random(height));
         velocity = PVector.random2D().mult(0);
         acceleration = new PVector();
-        ray = new Ray(t, position, velocity.heading());
+        ray = new Ray(position, velocity.heading());
         perceptionRadius = 100;
-        color = t.color(100, t.map(perceptionRadius, 10, 150, 0, 255), 255);
+        color_ = color(100, map(perceptionRadius, 10, 150, 0, 255), 255);
         maxForce = 0.2f;
     }
 
     void show() {
-        t.noStroke();
-        t.fill(color, 100);
+        noStroke();
+        fill(color_, 100);
 
         final float cx = 1.5f / 3;
         final float cy = 1.5f / 3;
         float size = 10;
-        t.pushMatrix();
+        pushMatrix();
         {
-            t.translate(position.x, position.y);
-            t.rotate(velocity.heading());
-            t.scale(size);
-            t.beginShape();
+            translate(position.x, position.y);
+            rotate(velocity.heading());
+            scale(size);
+            beginShape();
             {
                 // Triangle
-                t.vertex(0 - cx, 0 - cy);
-                t.vertex(0 - cx, 1 - cy);
-                t.vertex(1.5f - cx, 0.5f - cy);
+                vertex(0 - cx, 0 - cy);
+                vertex(0 - cx, 1 - cy);
+                vertex(1.5f - cx, 0.5f - cy);
             }
-            t.endShape();
+            endShape();
         }
-        t.popMatrix();
+        popMatrix();
     }
 
     PVector alignmentForce(ArrayList<Boid> boids) {
@@ -138,8 +126,8 @@ public class Boid {
                 avoidanceForce.setMag(maxForce);
                 avoidanceForce.add(PVector.mult(velocity, -0.05f));
 
-                t.stroke(255);
-                t.line(position.x, position.y, avoidanceForce.x * 100 + position.x, avoidanceForce.y * 100 + position.y);
+                stroke(255);
+                line(position.x, position.y, avoidanceForce.x * 100 + position.x, avoidanceForce.y * 100 + position.y);
             }
         }
         return avoidanceForce;

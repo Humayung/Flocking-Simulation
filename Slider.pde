@@ -16,18 +16,16 @@ public class Slider {
 
     String caption;
 
-    PApplet t;
 
-    Slider(PApplet target, float x, float y, float w, float lBound, float uBound, String caption) {
+    Slider(float x, float y, float w, float lBound, float uBound, String caption) {
         this.caption = caption;
-        t = target;
         this.x = x;
         this.y = y;
         this.w = w;
-        this.tValue = t.lerp(lBound, uBound, 0.5f);
+        this.tValue = lerp(lBound, uBound, 0.5f);
         this.lBound = lBound;
         this.uBound = uBound;
-        this.disabledColor = t.color(200);
+        this.disabledColor = color(200);
         this.baseColor = 150;
         this.neutralColor = 150;
     }
@@ -37,21 +35,21 @@ public class Slider {
     }
 
     void display() {
-        t.fill(255);
-        t.textSize(13);
-        t.textAlign(t.CENTER);
-        t.text(caption, x + w/2, y - 10);
-        t.stroke(baseColor);
-        t.strokeWeight(2);
-        t.line(x, y, x + w, y);
+        fill(255);
+        textSize(13);
+        textAlign(CENTER);
+        text(caption, x + w/2, y - 10);
+        stroke(baseColor);
+        strokeWeight(2);
+        line(x, y, x + w, y);
 
-        tweakX = t.map(value, lBound, uBound, x, x+w);
-        t.fill(baseColor);
-        t.noStroke();
+        tweakX = map(value, lBound, uBound, x, x+w);
+        fill(baseColor);
+        noStroke();
         if (!triggered) {
-            t.ellipse(tweakX, y, 13, 13);
+            ellipse(tweakX, y, 13, 13);
         } else {
-            t.ellipse(tweakX, y, 19, 19);
+            ellipse(tweakX, y, 19, 19);
         }
     }
 
@@ -81,14 +79,14 @@ public class Slider {
                 clicked();
             }
         }
-        value = t.lerp(value, tValue, 0.4f);
+        value = lerp(value, tValue, 0.4f);
     }
 
     boolean hover() {
-        if (t.dist(t.mouseX, t.mouseY, tweakX, y) < 19) {
+        if (dist(mouseX, mouseY, tweakX, y) < 19) {
             triggered = true;
-            t.textSize(12);
-            t.text(value, tweakX, y + 20);
+            textSize(12);
+            text(value, tweakX, y + 20);
             return true;
         }
         triggered = false;
@@ -100,12 +98,12 @@ public class Slider {
     }
 
     boolean clicked() {
-        if (t.mousePressed) {
-            if (t.mouseX > x && t.mouseX < x + w && t.mouseY > y-10 && t.mouseY < y + 10) {
-                tValue = t.map(t.constrain(t.mouseX, x, x+w), x, x+w, lBound, uBound);
+        if (mousePressed) {
+            if (mouseX > x && mouseX < x + w && mouseY > y-10 && mouseY < y + 10) {
+                tValue = map(constrain(mouseX, x, x+w), x, x+w, lBound, uBound);
             }
             if (hover()) {
-                tValue = t.map(t.constrain(t.mouseX, x, x+w), x, x+w, lBound, uBound);
+                tValue = map(constrain(mouseX, x, x+w), x, x+w, lBound, uBound);
                 return true;
             }
         }
