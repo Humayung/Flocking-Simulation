@@ -8,5 +8,4 @@ how an individual boid maneuvers based on the positions and velocities its
 nearby flockmates... (red3d.com/cwr/boids/)
 
 # Screenshot
-![Reference](https://github.com/Humayung/Stacker-processing/blob/master/screenshot.png)
-)
+![Reference](https://github.com/Humayung/Flocking-Simulation/blob/master/screenshot.png)
